@@ -1,5 +1,33 @@
 <p>Selecione uma carta</p>
 
-<div class="flex justify-start overflow-auto">
-    <img width="100px" class="mr-2" *ngFor="let card of cards | async" [src]="card.images.large"/>
-</div>
+<form [formGroup]="deckForm" (submit)="save()">
+  <label id="name-deck">Nome do baralho</label>
+  <input
+    type="text"
+    for="name-deck"
+    title="Nome do baralho"
+    formControlName="name"
+  />
+
+  <ul>
+    <li *ngFor="let card of cards | async">
+      <input
+        class="invisible"
+        title="{{ card.name }}"
+        type="checkbox"
+        id="{{ card.id }}"
+        (change)="checkChange(card)"
+      />
+      <label for="{{ card.id }}">
+        <img width="80px" class="mr-2" [src]="card.images.large" />
+      </label>
+    </li>
+  </ul>
+
+  <button
+    type="submit"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+  >
+    Salvar
+  </button>
+</form>

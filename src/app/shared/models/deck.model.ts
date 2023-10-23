@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Card } from "./card.model";
 
 export interface Deck {
@@ -5,6 +6,12 @@ export interface Deck {
   name: string;
   cards: Card[];
   pokemonCount: number;
-  trainnerCount: number;
+  trainerCount: number;
   colorTypes: string[];
+}
+
+export interface DeckForm {
+  id?: FormControl<string | null | undefined>;
+  name: FormControl<string | null | undefined>;
+  cards: FormControl<Card[] | null | undefined>;
 }

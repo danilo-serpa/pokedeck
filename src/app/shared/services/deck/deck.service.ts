@@ -1,31 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Deck } from '../../models/deck.model';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeckService {
-  constructor() {}
+  private key = 'decks';
+
+  constructor(private storageService: StorageService<Deck>) {}
 
   getDecks(): Deck[] {
-    return JSON.parse(localStorage.getItem('decks') ?? '[]');
+    return this.storageService.get(this.key);
   }
 
   createDeck(deck: Deck): void {
-    let listDeck = this.getDecks();
-    listDeck.push(deck);
-    localStorage.setItem('decks', JSON.stringify(deck));
-  }
-
-  removeDeck(deck: Deck): void {
-    let ListDeck = this.getDecks();
-    let index = ListDeck.findIndex((deck) => deck.id === deck.id);
-    ListDeck.splice(index, 1);
+    this.storageService.addItem(this.key, deck);
   }
 
   editDeck(deck: Deck): void {
-    let ListDeck = this.getDecks();
-    let index = ListDeck.findIndex((deck) => deck.id === deck.id);
-    ListDeck.splice(index, 1, deck);
+    this.storageService.editItem(this.key, deck);
+  }
+
+  removeDeck(deck: Deck): void {
+    this.storageService.removeItem(this.key, deck);
   }
 }

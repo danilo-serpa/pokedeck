@@ -1,15 +1,21 @@
-<div class="flex justify-center items-center flex-col">
-  <p class="text-center font-bold text-lg">deck-list works!</p>
-  <button
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-  >
-    Criar Baralho
-  </button>
+<div class="flex justify-center items-center flex-col mt-20">
   <a
     type="button"
     class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
     routerLink="/deck/form"
   >
     Criar Baralho
-</a>
+  </a>
+
+  Meus Baralhos
+  <div *ngFor="let deck of decks">
+    <div class="text-center">
+      Nome do baralho: {{ deck.name }}
+    </div>
+    <div class="clear-left overflow-auto">
+        <a class="float-left" *ngFor="let card of deck.cards">
+          <img width="100px" class="mr-2" [src]="card.images.large" />
+        </a>
+    </div>
+  </div>
 </div>
