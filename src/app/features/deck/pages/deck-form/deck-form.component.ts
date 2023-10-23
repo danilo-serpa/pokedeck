@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Card } from 'src/app/shared/models/card.model';
 import { Deck, DeckForm } from 'src/app/shared/models/deck.model';
 import { CardService } from 'src/app/shared/services';
+import { UserService } from 'src/app/shared/services/user/user.service';
 import { DeckService } from './../../../../shared/services/deck/deck.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class DeckFormComponent implements OnInit {
   constructor(
     private cardService: CardService,
     private deckService: DeckService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -64,12 +66,13 @@ export class DeckFormComponent implements OnInit {
         trainerCount: this.deckForm.value.cards?.filter(
           (c) => c.supertype === 'Trainer'
         ).length,
+        userId: this.userService.getCurrentUser().id
       };
 
       if (this.deckForm.value.id) {
-        this.deckService.editDeck(deckForSave);
+        this.deckService.update(deckForSave);
       } else {
-        this.deckService.createDeck(deckForSave);
+        this.deckService.add(deckForSave);
       }
 
       this.router.navigateByUrl('deck/list');

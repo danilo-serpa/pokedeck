@@ -9,18 +9,17 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () =>
-      import('./features/login/login.module').then((m) => m.LoginModule),
+    loadChildren: () => import('./features/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: 'deck',
-    loadChildren: () =>
-      import('./features/deck/deck.module').then((m) => m.DeckModule),
-  },
+    loadChildren: () => import('./features/deck/deck.module').then((m) => m.DeckModule),
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Deck } from '../../models/deck.model';
+import { User } from '../../models/user.model';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -10,19 +11,24 @@ export class DeckService {
 
   constructor(private storageService: StorageService<Deck>) {}
 
-  getDecks(): Deck[] {
-    return this.storageService.get(this.key);
+  getAll(): Deck[] {
+    return this.storageService.getList(this.key);
   }
 
-  createDeck(deck: Deck): void {
+  getByUser(user: User): Deck[] {
+    const decks = this.storageService.getList(this.key);
+    return decks.filter(deck => deck.userId === user.id)
+  }
+
+  add(deck: Deck): void {
     this.storageService.addItem(this.key, deck);
   }
 
-  editDeck(deck: Deck): void {
+  update(deck: Deck): void {
     this.storageService.editItem(this.key, deck);
   }
 
-  removeDeck(deck: Deck): void {
+  delete(deck: Deck): void {
     this.storageService.removeItem(this.key, deck);
   }
 }

@@ -8,6 +8,7 @@ export interface Deck {
   pokemonCount: number;
   trainerCount: number;
   colorTypes: string[];
+  userId: string;
 }
 
 export interface DeckForm {
