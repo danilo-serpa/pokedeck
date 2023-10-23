@@ -1,0 +1,5 @@
+<p>Selecione uma carta</p>
+
+<div class="flex justify-start overflow-auto">
+    <img width="100px" class="mr-2" *ngFor="let card of cards | async" [src]="card.images.large"/>
+</div>
