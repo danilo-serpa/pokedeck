@@ -15,20 +15,35 @@ export class DeckService {
     return this.storageService.getList(this.key);
   }
 
+  getById(id: string): Deck | undefined {
+    const decks = this.storageService.getList(this.key);
+    return decks.find((deck) => deck.id === id);
+  }
+
   getByUser(user: User): Deck[] {
     const decks = this.storageService.getList(this.key);
-    return decks.filter(deck => deck.userId === user.id)
+    return decks.filter((deck) => deck.userId === user.id);
   }
 
-  add(deck: Deck): void {
-    this.storageService.addItem(this.key, deck);
+  add(deck: Deck): Deck[] {
+    return this.storageService.addItem(this.key, deck);
   }
 
-  update(deck: Deck): void {
-    this.storageService.editItem(this.key, deck);
+  update(deck: Deck): Deck[] {
+    return this.storageService.editItem(this.key, deck);
   }
 
-  delete(deck: Deck): void {
-    this.storageService.removeItem(this.key, deck);
+  delete(deck: Deck): Deck[] {
+    return this.storageService.removeItem(this.key, deck);
+  }
+
+  deleteById(deckId: string): Deck[] {
+    const deckRemove = this.getById(deckId);
+    let decks: Deck[] = [];
+
+    if (deckRemove) {
+      decks = this.storageService.removeItem(this.key, deckRemove);
+    }
+    return decks;
   }
 }

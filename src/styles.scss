@@ -1,5 +1,6 @@
 
 @use "igniteui-angular/theming" as *;
+
 // Uncomment the following lines if you want to add a custom palette:
 // $primary: #731963 !default;
 // $secondary: #ce5712 !default;
@@ -17,3 +18,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+igc-trial-watermark {
+  display: none;
+}

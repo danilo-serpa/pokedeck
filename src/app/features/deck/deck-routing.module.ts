@@ -28,6 +28,13 @@ const routes: Routes = [
         (m) => m.DeckFormModule
       ),
   },
+  {
+    path: 'form/:id',
+    loadChildren: () =>
+      import('./pages/deck-form/deck-form.module').then(
+        (m) => m.DeckFormModule
+      ),
+  },
 ];
 
 @NgModule({

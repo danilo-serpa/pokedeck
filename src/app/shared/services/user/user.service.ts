@@ -32,13 +32,13 @@ export class UserService {
     return this.storageService.removeItem(this.key, user);
   }
 
-  login(email: string, password: string): User | null {
+  login(email: string, password: string): User | undefined {
     const users = this.storageService.getList(this.key);
     const userLogged =
-      users.find((u) => u.email === email && u.password === password) ?? null;
+      users.find((u) => u.email === email && u.password === password);
 
     if (userLogged) {
-      this.storageService.set('currentUser', userLogged);
+      this.storageService.set(this.currentUserkey, userLogged);
     }
     return userLogged;
   }
