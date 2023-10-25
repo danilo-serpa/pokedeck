@@ -19,6 +19,7 @@ export interface Card {
   legalities: Legalities;
   images: Images2;
   tcgplayer: Tcgplayer;
+  selected: boolean;
 }
 
 export interface Tcgplayer {

@@ -34,7 +34,8 @@ export class StorageService<T> {
 
   editItem(key: string, value: T): T[] {
     let list = this.getList(key);
-    list.push(value);
+    let index = list.findIndex((l) => l === value);
+    list.splice(index, 1, value);
     localStorage.setItem(key, JSON.stringify(list));
     return list;
   }

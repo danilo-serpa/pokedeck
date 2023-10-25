@@ -15,7 +15,7 @@ import { DeckService } from './../../../../shared/services/deck/deck.service';
   styleUrls: ['./deck-form.component.scss'],
 })
 export class DeckFormComponent implements OnInit {
-  public cards!: Observable<Card[]>;
+  public cards$!: Observable<Card[]>;
   public deck?: Deck;
   public deckForm!: FormGroup<DeckForm>;
 
@@ -32,7 +32,7 @@ export class DeckFormComponent implements OnInit {
     this.deck = this.deckService.getById(deckId);
     this.createForm(this.deck);
 
-    this.cards = this.cardService.getCards();
+    this.cards$ = this.cardService.getCards();
   }
 
   createForm(deck?: Deck): void {
@@ -44,7 +44,7 @@ export class DeckFormComponent implements OnInit {
 
   checkChange(card: Card): void {
     let indexCard =
-      this.deckForm.value.cards?.findIndex((c) => c === card) ?? -1;
+      this.deckForm.value.cards?.findIndex((c) => c.id === card.id) ?? -1;
     if (indexCard > -1) {
       let cardsSelected = this.deckForm.value.cards?.filter(
         (c) => c.id !== card.id
@@ -59,6 +59,13 @@ export class DeckFormComponent implements OnInit {
     if (!this.deckForm.controls.cards.value?.length) {
       this.deckForm.controls.cards.setErrors;
     }
+  }
+
+  isChecked(card: Card): boolean {
+    return (
+      !!this.deck?.id.length &&
+      this.deck?.cards.some((item) => item.id === card.id)
+    );
   }
 
   save(): void {

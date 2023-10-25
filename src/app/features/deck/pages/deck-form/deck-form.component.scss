@@ -6,11 +6,11 @@ li {
   display: inline-block;
 }
 
-input[type="checkbox"][id^="myCheckbox"] {
+input[type="checkbox"] {
   display: none;
 }
 
-label {
+label:not(igx-input-group label) {
   border: 1px solid #fff;
   padding: 10px;
   display: block;
@@ -38,8 +38,8 @@ label:before {
 }
 
 label img {
-  height: 100px;
-  width: 100px;
+  // height: 100px;
+  width: 80px;
   transition-duration: 0.2s;
   transform-origin: 50% 50%;
 }
@@ -58,4 +58,8 @@ label img {
   transform: scale(0.9);
   /* box-shadow: 0 0 5px #333; */
   z-index: -1;
+}
+
+.image-list {
+  height: 300px;
 }
