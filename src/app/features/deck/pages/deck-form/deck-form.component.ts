@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IgxPaginatorComponent } from 'igniteui-angular';
 import { Observable } from 'rxjs';
 import { Card } from 'src/app/shared/models/card.model';
 import { Deck, DeckForm } from 'src/app/shared/models/deck.model';
+import { Response } from 'src/app/shared/models/response.model';
 import { CardService } from 'src/app/shared/services';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,9 +17,15 @@ import { DeckService } from './../../../../shared/services/deck/deck.service';
   styleUrls: ['./deck-form.component.scss'],
 })
 export class DeckFormComponent implements OnInit {
-  public cards$!: Observable<Card[]>;
+  public cards$!: Observable<Response<Card[]>>;
   public deck?: Deck;
   public deckForm!: FormGroup<DeckForm>;
+
+  @ViewChild('paginator', { static: true })
+  public paginator!: IgxPaginatorComponent;
+  public itemsPerPage = [10, 20, 30];
+  public currentPerPage = 10;
+  public currentPage = 0;
 
   constructor(
     private cardService: CardService,
@@ -32,7 +40,7 @@ export class DeckFormComponent implements OnInit {
     this.deck = this.deckService.getById(deckId);
     this.createForm(this.deck);
 
-    this.cards$ = this.cardService.getCards();
+    this.cards$ = this.cardService.getCards(this.currentPage, this.currentPerPage);
   }
 
   createForm(deck?: Deck): void {
@@ -62,10 +70,26 @@ export class DeckFormComponent implements OnInit {
   }
 
   isChecked(card: Card): boolean {
-    return (
-      !!this.deck?.id.length &&
-      this.deck?.cards.some((item) => item.id === card.id)
-    );
+    return this.deckForm.value.cards?.some((item) => item.id === card.id) ?? false;
+  }
+
+  perPageChange(perPage: number): void {
+    if (this.currentPerPage !== perPage) {
+      this.currentPerPage = perPage;
+      this.currentPage = 0;
+      this.cards$ = this.cardService.getCards(
+        this.currentPage,
+        this.currentPerPage
+      );
+    }
+  }
+
+  pageChange(numPage: number): void {
+    if (this.currentPage !== numPage) {
+      this.currentPage = numPage;
+      this.cards$ = this.cardService.getCards(numPage, this.currentPerPage);
+      console.log('Mudou a pagina');
+    }
   }
 
   save(): void {

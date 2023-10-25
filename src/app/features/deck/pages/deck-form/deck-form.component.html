@@ -1,4 +1,3 @@
-<app-loader *ngIf="!(cards$ | async)"></app-loader>
 <div class="m-10">
   <form [formGroup]="deckForm" (submit)="save()">
     <igx-input-group>
@@ -12,24 +11,37 @@
       <label igxLabel for="name">Nome do baralho</label>
     </igx-input-group>
 
-    <p class="text-lg">Selecione uma carta</p>
-    <div class="image-list overflow-auto">
-
-      <ul>
-        <li *ngFor="let card of cards$ | async">
-          <input
-            class="invisible"
-            title="{{ card.name }}"
-            type="checkbox"
-            id="{{ card.id }}"
-            [checked]="isChecked(card)"
-            (change)="checkChange(card)"
-          />
-          <label for="{{ card.id }}">
-            <img [src]="card.images.large" />
-          </label>
-        </li>
-      </ul>
+    <p class="text-lg">Selecione suas cartas</p>
+    <div *ngIf="cards$ | async as cards" class="">
+      <div class="">
+        <app-loader *ngIf="!(cards$ | async)"></app-loader>
+        <ul>
+          <li *ngFor="let card of cards.data">
+            <input
+              class="invisible"
+              title="{{ card.name }}"
+              type="checkbox"
+              id="{{ card.id }}"
+              [checked]="isChecked(card)"
+              (change)="checkChange(card)"
+            />
+            <label for="{{ card.id }}">
+              <img [src]="card.images.large" />
+            </label>
+          </li>
+        </ul>
+      </div>
+      <igx-paginator
+        [perPage]="currentPerPage"
+        [selectOptions]="itemsPerPage"
+        [totalRecords]="
+          cards.totalCount ? cards.totalCount / currentPerPage : 1
+        "
+        (perPageChange)="perPageChange($event)"
+        [page]="currentPage"
+        (pageChange)="pageChange($event)"
+      >
+      </igx-paginator>
     </div>
 
     <div class="mt-10 flex justify-end">

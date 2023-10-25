@@ -30,6 +30,11 @@
             class="cursor-pointer"
             >edit
           </igx-icon>
+          <igx-icon
+            [routerLink]="['/deck/detail', cell.value]"
+            class="ml-2 cursor-pointer"
+            >search
+          </igx-icon>
           <igx-icon (click)="deleteDeck(cell.value)" class="ml-2 cursor-pointer"
             >delete
           </igx-icon>

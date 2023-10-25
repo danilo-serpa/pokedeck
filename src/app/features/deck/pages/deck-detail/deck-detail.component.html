@@ -1,0 +1,13 @@
+<div>
+  <p class="text-lg">Detalhes do baralho</p>
+    <div class="image-list overflow-auto">
+
+      <ul>
+        <li *ngFor="let card of deck?.cards">
+          <label>
+            <img [src]="card.images.large" />
+          </label>
+        </li>
+      </ul>
+    </div>
+</div>>
