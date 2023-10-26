@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IgxIconModule, IgxInputGroupModule, IgxPaginatorModule } from 'igniteui-angular';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
@@ -14,6 +14,7 @@ const routes: Routes = [{ path: '', component: DeckFormComponent }];
     RouterModule.forChild(routes),
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     IgxInputGroupModule,
     IgxIconModule,
     IgxPaginatorModule,

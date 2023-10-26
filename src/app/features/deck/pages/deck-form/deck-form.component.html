@@ -1,6 +1,8 @@
 <div class="m-10">
   <div class="flex justify-between items-center mb-5">
-    <div class="text-3xl">{{deck?.id ? 'Editar baralho' : 'Criar baralho'}}</div>
+    <div class="text-3xl">
+      {{ deck?.id ? "Editar baralho" : "Criar baralho" }}
+    </div>
   </div>
   <form [formGroup]="deckForm" (submit)="save()">
     <span>Nome do baralho</span>
@@ -13,40 +15,94 @@
         title="Nome do baralho"
       />
     </igx-input-group>
+    <div
+      *ngIf="deckForm.get('name')?.errors && deckForm.get('name')?.touched"
+      class="message-error"
+    >
+      Nome obrigatório
+    </div>
 
-    <p>Selecione suas cartas</p>
-    <div *ngIf="cards$ | async as cards; else templateLoading">
-      <ul>
-        <li *ngFor="let card of cards.data">
+    <form>
+      <div class="flex justify-between">
+        <p>Selecione suas cartas</p>
+        <igx-input-group>
           <input
-            class="invisible"
-            title="{{ card.name }}"
-            type="checkbox"
-            id="{{ card.id }}"
-            [checked]="isChecked(card)"
-            (change)="checkChange(card)"
+            igxInput
+            type="text"
+            placeholder="Pesquisar cartas"
+            [(ngModel)]="search"
+            (keydown.enter)="filter()"
+            [ngModelOptions]="{ standalone: true }"
           />
-          <label for="{{ card.id }}">
-            <img [src]="card.images.large" />
-          </label>
-        </li>
-      </ul>
-      <igx-paginator
-        [perPage]="currentPerPage"
-        [selectOptions]="itemsPerPage"
-        [totalRecords]="
-          cards.totalCount ? cards.totalCount / currentPerPage : 1
-        "
-        (perPageChange)="perPageChange($event)"
-        [page]="currentPage"
-        (pageChange)="pageChange($event)"
-      >
-      </igx-paginator>
+          <igx-suffix (click)="filter()">
+            <igx-icon>search</igx-icon>
+          </igx-suffix>
+        </igx-input-group>
+      </div>
+    </form>
+    <div
+      [ngClass]="{
+        'validation-error':
+          deckForm.get('cards')?.errors && deckForm.get('cards')?.touched
+      }"
+    >
+      <div *ngIf="cards$ | async as cards; else templateLoading">
+        <ul>
+          <li *ngFor="let card of cards.data">
+            <input
+              class="invisible"
+              title="{{ card.name }}"
+              type="checkbox"
+              id="{{ card.id }}"
+              [checked]="isChecked(card)"
+              (change)="checkChange(card)"
+            />
+            <label for="{{ card.id }}">
+              <img [src]="card.images.large" />
+            </label>
+          </li>
+        </ul>
+        <igx-paginator
+          [perPage]="currentPerPage"
+          [selectOptions]="itemsPerPage"
+          [totalRecords]="
+            cards.totalCount ? cards.totalCount / currentPerPage : 1
+          "
+          (perPageChange)="perPageChange($event)"
+          [page]="currentPage"
+          (pageChange)="pageChange($event)"
+        >
+        </igx-paginator>
+      </div>
+    </div>
+    <div
+      *ngIf="deckForm.get('cards')?.getError('required') && deckForm.get('cards')?.touched"
+      class="message-error"
+    >
+      É obrigatória a seleçãod entre 24 e 60 cartas.
+    </div>
+    <div
+      *ngIf="deckForm.get('cards')?.getError('minlength') && deckForm.get('cards')?.touched"
+      class="message-error"
+    >
+      Menos que 24 cartas foram selecionadas.
+    </div>
+    <div
+      *ngIf="deckForm.get('cards')?.getError('maxlength') && deckForm.get('cards')?.touched"
+      class="message-error"
+    >
+      Mais que 60 cartas foram selecionadas.
+    </div>
+    <div
+      *ngIf="deckForm.get('cards')?.getError('limitcard') && deckForm.get('cards')?.touched"
+      class="message-error"
+    >
+      O limite de cartas com o mesmo nome é de 4 cartas.
     </div>
 
     <div class="mt-10 flex justify-end">
       <button
-        type="submit"
+        type="button"
         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
         routerLink="/deck/list"
       >

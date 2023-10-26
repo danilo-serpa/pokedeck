@@ -58,6 +58,12 @@ label img {
   z-index: -1;
 }
 
-.image-list {
-  height: 300px;
+.validation-error {
+  border: solid 1px hsla(var(--ig-error-500), 1)
+}
+
+.message-error {
+  color: hsla(var(--ig-error-500), 1);
+  font-size: small;
+  margin-top: 10px;
 }

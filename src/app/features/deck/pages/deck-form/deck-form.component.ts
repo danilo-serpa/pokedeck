@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IgxPaginatorComponent } from 'igniteui-angular';
 import { Observable } from 'rxjs';
+import { DeckValidators } from 'src/app/core/validators/deck.validator';
 import { Card } from 'src/app/shared/models/card.model';
 import { Deck, DeckForm } from 'src/app/shared/models/deck.model';
 import { Response } from 'src/app/shared/models/response.model';
@@ -20,6 +21,7 @@ export class DeckFormComponent implements OnInit {
   public cards$!: Observable<Response<Card[]>>;
   public deck?: Deck;
   public deckForm!: FormGroup<DeckForm>;
+  public search: string = '';
 
   @ViewChild('paginator', { static: true })
   public paginator!: IgxPaginatorComponent;
@@ -49,12 +51,25 @@ export class DeckFormComponent implements OnInit {
   createForm(deck?: Deck): void {
     this.deckForm = new FormGroup<DeckForm>({
       name: new FormControl(deck?.name ?? null, [Validators.required]),
-      cards: new FormControl(deck?.cards ?? [], [Validators.required]),
+      cards: new FormControl(deck?.cards ?? [], [
+        Validators.required,
+        Validators.minLength(24),
+        Validators.maxLength(60),
+        DeckValidators.limitCardsSameName
+      ]),
     });
   }
 
+  filter(): void {
+    this.cards$ = this.cardService.getCards(
+      this.currentPage,
+      this.currentPerPage,
+      this.search
+    );
+  }
+
   checkChange(card: Card): void {
-    let indexCard =
+    const indexCard =
       this.deckForm.value.cards?.findIndex((c) => c.id === card.id) ?? -1;
     if (indexCard > -1) {
       let cardsSelected = this.deckForm.value.cards?.filter(
@@ -67,9 +82,8 @@ export class DeckFormComponent implements OnInit {
       this.deckForm.controls.cards.setValue(cardsSelected);
     }
 
-    if (!this.deckForm.controls.cards.value?.length) {
-      this.deckForm.controls.cards.setErrors;
-    }
+    this.deckForm.controls.cards.setErrors;
+    this.deckForm.controls.cards.markAsTouched();
   }
 
   isChecked(card: Card): boolean {
@@ -84,7 +98,8 @@ export class DeckFormComponent implements OnInit {
       this.currentPage = 0;
       this.cards$ = this.cardService.getCards(
         this.currentPage,
-        this.currentPerPage
+        this.currentPerPage,
+        this.search
       );
     }
   }
@@ -92,8 +107,11 @@ export class DeckFormComponent implements OnInit {
   pageChange(numPage: number): void {
     if (this.currentPage !== numPage) {
       this.currentPage = numPage;
-      this.cards$ = this.cardService.getCards(numPage, this.currentPerPage);
-      console.log('Mudou a pagina');
+      this.cards$ = this.cardService.getCards(
+        numPage,
+        this.currentPerPage,
+        this.search
+      );
     }
   }
 
@@ -122,8 +140,10 @@ export class DeckFormComponent implements OnInit {
   }
 
   getDistinctType(cards: Card[]): string[] {
-    const types: string[] = [];
-    cards.forEach(c => types.concat(c.types))
-    return types.filter((value, index, list) => list.indexOf(value) === index);
+    const typesList = cards.reduce<string[]>(
+      (list1, list2) => list1.concat(list2.types),
+      []
+    );
+    return [...new Set(typesList)];
   }
 }

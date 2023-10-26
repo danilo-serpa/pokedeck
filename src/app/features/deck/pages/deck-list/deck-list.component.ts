@@ -28,7 +28,7 @@ export class DeckListComponent implements OnInit {
     this.decks = this.deckService.deleteById(deckId);
   }
 
-  public filter(target: EventTarget | null): void {
+  filter(target: EventTarget | null): void {
     this.grid1.filter(
       'name',
       (target as HTMLInputElement).value,
