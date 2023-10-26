@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IgxButtonModule, IgxCarouselModule, IgxIconModule, IgxInputGroupModule, IgxRippleModule } from 'igniteui-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LayoutDefaultModule } from './shared/components/layouts/layout-default/layout-default.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,10 +23,10 @@ import { AppComponent } from './app.component';
     IgxIconModule,
     IgxButtonModule,
     IgxRippleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LayoutDefaultModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LayoutDefaultComponent } from './shared/components/layouts/layout-default/layout-default.component';
 
 const routes: Routes = [
   {
@@ -9,12 +10,20 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./features/login/login.module').then((m) => m.LoginModule),
+    loadChildren: () =>
+      import('./features/login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: 'deck',
-    loadChildren: () => import('./features/deck/deck.module').then((m) => m.DeckModule),
-  }
+    path: '',
+    component: LayoutDefaultComponent,
+    children: [
+      {
+        path: 'deck',
+        loadChildren: () =>
+          import('./features/deck/deck.module').then((m) => m.DeckModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({

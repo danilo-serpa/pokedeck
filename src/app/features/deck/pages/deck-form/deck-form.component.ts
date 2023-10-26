@@ -40,7 +40,10 @@ export class DeckFormComponent implements OnInit {
     this.deck = this.deckService.getById(deckId);
     this.createForm(this.deck);
 
-    this.cards$ = this.cardService.getCards(this.currentPage, this.currentPerPage);
+    this.cards$ = this.cardService.getCards(
+      this.currentPage,
+      this.currentPerPage
+    );
   }
 
   createForm(deck?: Deck): void {
@@ -70,7 +73,9 @@ export class DeckFormComponent implements OnInit {
   }
 
   isChecked(card: Card): boolean {
-    return this.deckForm.value.cards?.some((item) => item.id === card.id) ?? false;
+    return (
+      this.deckForm.value.cards?.some((item) => item.id === card.id) ?? false
+    );
   }
 
   perPageChange(perPage: number): void {
@@ -94,16 +99,15 @@ export class DeckFormComponent implements OnInit {
 
   save(): void {
     if (this.deckForm.valid) {
-      let deckForSave = <Deck>{
+      const cards = this.deckForm.value.cards ?? [];
+
+      const deckForSave = <Deck>{
         id: this.deck?.id ?? uuidv4(),
         name: this.deckForm.value.name,
-        cards: this.deckForm.value.cards ?? [],
-        pokemonCount: this.deckForm.value.cards?.filter(
-          (c) => c.supertype === 'Pokémon'
-        ).length,
-        trainerCount: this.deckForm.value.cards?.filter(
-          (c) => c.supertype === 'Trainer'
-        ).length,
+        cards: cards,
+        pokemonCount: cards.filter((c) => c.supertype === 'Pokémon').length,
+        trainerCount: cards.filter((c) => c.supertype === 'Trainer').length,
+        colorTypes: this.getDistinctType(cards),
         userId: this.userService.getCurrentUser().id,
       };
 
@@ -115,5 +119,11 @@ export class DeckFormComponent implements OnInit {
 
       this.router.navigateByUrl('deck/list');
     }
+  }
+
+  getDistinctType(cards: Card[]): string[] {
+    const types: string[] = [];
+    cards.forEach(c => types.concat(c.types))
+    return types.filter((value, index, list) => list.indexOf(value) === index);
   }
 }

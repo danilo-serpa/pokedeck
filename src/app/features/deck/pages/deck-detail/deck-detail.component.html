@@ -1,13 +1,29 @@
-<div>
-  <p class="text-lg">Detalhes do baralho</p>
-    <div class="image-list overflow-auto">
-
-      <ul>
-        <li *ngFor="let card of deck?.cards">
-          <label>
-            <img [src]="card.images.large" />
-          </label>
-        </li>
-      </ul>
+<div class="m-10">
+  <div class="flex justify-between items-center mb-5">
+    <div class="text-3xl">{{deck?.name}}</div>
+  </div>
+  <div class="flex gap-7 mb-12">
+    <div class="flex flex-col items-center">
+      <span class="font-bold">Número de pokemons</span>
+      <span>{{deck?.pokemonCount}}</span>
     </div>
-</div>>
+    <div class="flex flex-col items-center">
+      <span class="font-bold">Número de Treinadores</span>
+      <span>{{deck?.trainerCount}}</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <span class="font-bold">Cores</span>
+      <span *ngFor="let type of deck?.colorTypes">{{type}}</span>
+    </div>
+  </div>
+  <span class="font-bold">Lista de cartas</span>
+  <div class="image-list overflow-auto">
+    <ul>
+      <li *ngFor="let card of deck?.cards">
+        <label>
+          <img [src]="card.images.large" />
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>

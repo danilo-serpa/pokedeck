@@ -1,6 +1,10 @@
 <div class="m-10">
+  <div class="flex justify-between items-center mb-5">
+    <div class="text-3xl">{{deck?.id ? 'Editar baralho' : 'Criar baralho'}}</div>
+  </div>
   <form [formGroup]="deckForm" (submit)="save()">
-    <igx-input-group>
+    <span>Nome do baralho</span>
+    <igx-input-group class="w-64">
       <input
         igxInput
         id="name"
@@ -8,29 +12,25 @@
         formControlName="name"
         title="Nome do baralho"
       />
-      <label igxLabel for="name">Nome do baralho</label>
     </igx-input-group>
 
-    <p class="text-lg">Selecione suas cartas</p>
-    <div *ngIf="cards$ | async as cards" class="">
-      <div class="">
-        <app-loader *ngIf="!(cards$ | async)"></app-loader>
-        <ul>
-          <li *ngFor="let card of cards.data">
-            <input
-              class="invisible"
-              title="{{ card.name }}"
-              type="checkbox"
-              id="{{ card.id }}"
-              [checked]="isChecked(card)"
-              (change)="checkChange(card)"
-            />
-            <label for="{{ card.id }}">
-              <img [src]="card.images.large" />
-            </label>
-          </li>
-        </ul>
-      </div>
+    <p>Selecione suas cartas</p>
+    <div *ngIf="cards$ | async as cards; else templateLoading">
+      <ul>
+        <li *ngFor="let card of cards.data">
+          <input
+            class="invisible"
+            title="{{ card.name }}"
+            type="checkbox"
+            id="{{ card.id }}"
+            [checked]="isChecked(card)"
+            (change)="checkChange(card)"
+          />
+          <label for="{{ card.id }}">
+            <img [src]="card.images.large" />
+          </label>
+        </li>
+      </ul>
       <igx-paginator
         [perPage]="currentPerPage"
         [selectOptions]="itemsPerPage"
@@ -61,3 +61,7 @@
     </div>
   </form>
 </div>
+
+<ng-template #templateLoading>
+  <app-loader></app-loader>
+</ng-template>
