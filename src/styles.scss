@@ -1,24 +1,53 @@
-
-@use "igniteui-angular/theming" as *;
-
-// Uncomment the following lines if you want to add a custom palette:
-// $primary: #731963 !default;
-// $secondary: #ce5712 !default;
-// $app-palette: palette($primary, $secondary, $surface);
-
-/* autoprefixer grid: on */
-
-@include core();
-@include typography($font-family: $material-typeface, $type-scale: $material-type-scale);
-@include theme($default-palette);
-// CSS Reset, comment out if not required or using a different module
-@import 'minireset.css/minireset';
 /* You can add global styles to this file, and also import other style files */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// Standard CSS normalize, comment out if not required or using a different module
+@use "minireset.css/minireset";
+@use "igniteui-angular/theming" as *;
+
+@include core();
+@include typography();
+
+
+$custom-palette: palette($primary: #166ce500,
+    $secondary: #e0d94c,
+    $surface: #494848,
+    $gray: #fff);
+
+@include light-theme($custom-palette);
+
+body {
+  background: hsla(var(--ig-surface-500));
+  color: var(--ig-surface-500-contrast);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.ig-typography {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  .ig-typography__body-1 {
+    margin: 0;
+  }
+}
+
+.outer-wrapper>*:not(router-outlet) {
+  width: 100%;
+}
+
 
 igc-trial-watermark {
   display: none;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

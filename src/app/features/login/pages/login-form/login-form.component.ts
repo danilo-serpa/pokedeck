@@ -27,14 +27,14 @@ export class LoginFormComponent {
 
   createFormLogin(user?: UserFormLogin): void {
     this.loginForm = new FormGroup<UserFormLogin>({
-      email: new FormControl(user?.email, Validators.required),
+      username: new FormControl(user?.username, Validators.required),
       password: new FormControl(user?.password, Validators.required),
     });
   }
 
   createFormRegister(user?: UserFormRegister): void {
     this.registrationForm = new FormGroup<UserFormRegister>({
-      newEmail: new FormControl(user?.newEmail, Validators.required),
+      newUsername: new FormControl(user?.newUsername, Validators.required),
       newPassword: new FormControl(user?.newPassword, Validators.required),
       firstName: new FormControl(user?.firstName, Validators.required),
       lastName: new FormControl(user?.lastName, Validators.required),
@@ -44,11 +44,9 @@ export class LoginFormComponent {
   tryLogin() {
     const loginInfo = this.loginForm.value;
     const userLogged = this.userService.login(
-      loginInfo.email ?? '',
+      loginInfo.username ?? '',
       loginInfo.password ?? ''
     );
-    // this.showLogin = false;
-    // this.showSuccessLogin = true;
 
     if (userLogged) {
       this.router.navigateByUrl('deck/list');
@@ -72,7 +70,7 @@ export class LoginFormComponent {
     const registerInfo = this.registrationForm.value;
     const newUser = <User>{
       id: uuidv4(),
-      email: registerInfo.newEmail,
+      username: registerInfo.newUsername,
       password: registerInfo.newPassword,
       firstName: registerInfo.firstName,
       lastName: registerInfo.lastName,

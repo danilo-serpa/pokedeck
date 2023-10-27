@@ -32,10 +32,10 @@ export class UserService {
     return this.storageService.removeItem(this.key, user);
   }
 
-  login(email: string, password: string): User | undefined {
+  login(username: string, password: string): User | undefined {
     const users = this.storageService.getList(this.key);
     const userLogged =
-      users.find((u) => u.email === email && u.password === password);
+      users.find((u) => u.username === username && u.password === password);
 
     if (userLogged) {
       this.storageService.set(this.currentUserkey, userLogged);

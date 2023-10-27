@@ -15,15 +15,14 @@
         title="Nome do baralho"
       />
     </igx-input-group>
-    <div
-      *ngIf="deckForm.get('name')?.errors && deckForm.get('name')?.touched"
-      class="message-error"
-    >
-      Nome obrigatório
-    </div>
+    <app-validation-message
+      [control]="deckForm.controls.name"
+      validation="required"
+      message="O nome do baralho é obrigatório"
+    ></app-validation-message>
 
     <form>
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center mt-4">
         <p>Selecione suas cartas</p>
         <igx-input-group>
           <input
@@ -75,30 +74,26 @@
         </igx-paginator>
       </div>
     </div>
-    <div
-      *ngIf="deckForm.get('cards')?.getError('required') && deckForm.get('cards')?.touched"
-      class="message-error"
-    >
-      É obrigatória a seleçãod entre 24 e 60 cartas.
-    </div>
-    <div
-      *ngIf="deckForm.get('cards')?.getError('minlength') && deckForm.get('cards')?.touched"
-      class="message-error"
-    >
-      Menos que 24 cartas foram selecionadas.
-    </div>
-    <div
-      *ngIf="deckForm.get('cards')?.getError('maxlength') && deckForm.get('cards')?.touched"
-      class="message-error"
-    >
-      Mais que 60 cartas foram selecionadas.
-    </div>
-    <div
-      *ngIf="deckForm.get('cards')?.getError('limitcard') && deckForm.get('cards')?.touched"
-      class="message-error"
-    >
-      O limite de cartas com o mesmo nome é de 4 cartas.
-    </div>
+    <app-validation-message
+      [control]="deckForm.controls.cards"
+      validation="required"
+      message="A seleção de cartas é obrigatória."
+    ></app-validation-message>
+    <app-validation-message
+      [control]="deckForm.controls.cards"
+      validation="minlength"
+      message="O limite mínimo é de 24 cartas selecionadas!"
+    ></app-validation-message>
+    <app-validation-message
+      [control]="deckForm.controls.cards"
+      validation="maxlength"
+      message="O limite máximo é de 60 cartas selecionadas!"
+    ></app-validation-message>
+    <app-validation-message
+      [control]="deckForm.controls.cards"
+      validation="limitcard"
+      message="O limite de cartas com o mesmo nome é de 4 cartas."
+    ></app-validation-message>
 
     <div class="mt-10 flex justify-end">
       <button

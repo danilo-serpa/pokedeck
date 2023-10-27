@@ -5,20 +5,25 @@
     [formGroup]="loginForm"
     (ngSubmit)="tryLogin()"
   >
-    <h3>Bem vindo!</h3>
+    <h3 class="text-center">Pokedeck</h3>
     <igx-input-group>
       <igx-prefix>
         <igx-icon>account_circle</igx-icon>
       </igx-prefix>
-      <label igxLabel for="email">Usuário</label>
+      <label igxLabel for="username">Usuário</label>
       <input
         igxInput
-        id="email"
-        name="email"
-        formControlName="email"
+        id="username"
+        name="username"
+        formControlName="username"
         type="text"
       />
     </igx-input-group>
+    <app-validation-message
+      [control]="loginForm.controls.username"
+      validation="required"
+      message="O Usuário é obrigatório"
+    ></app-validation-message>
     <igx-input-group>
       <igx-prefix>
         <igx-icon>lock</igx-icon>
@@ -32,15 +37,20 @@
         formControlName="password"
       />
     </igx-input-group>
+    <app-validation-message
+      [control]="loginForm.controls.password"
+      validation="required"
+      message="A Senha é obrigatória"
+    ></app-validation-message>
     <button
       igxButton="raised"
       type="submit"
       igxRipple
       [disabled]="!loginForm.valid"
     >
-      LOG IN
+      ENTRAR
     </button>
-    <a (click)="showRegistrationForm()">Register</a>
+    <a (click)="showRegistrationForm()">Cadastrar</a>
   </form>
 
   <div *ngIf="showSuccessLogin">Logado com sucesso!</div>
@@ -51,7 +61,7 @@
     [formGroup]="registrationForm"
     (ngSubmit)="tryRegister()"
   >
-    <h3>Create your account</h3>
+    <h3>Crie sua conta</h3>
     <igx-input-group>
       <label igxLabel for="firstName">Primeiro nome</label>
       <input
@@ -62,8 +72,13 @@
         type="text"
       />
     </igx-input-group>
+    <app-validation-message
+      [control]="registrationForm.controls.firstName"
+      validation="required"
+      message="O Primeiro nome é obrigatório"
+    ></app-validation-message>
     <igx-input-group>
-      <label igxLabel for="lastName">Segundo nome</label>
+      <label igxLabel for="lastName">Último nome</label>
       <input
         igxInput
         id="lastName"
@@ -72,16 +87,26 @@
         type="text"
       />
     </igx-input-group>
+    <app-validation-message
+      [control]="registrationForm.controls.lastName"
+      validation="required"
+      message="O Último nome é obrigatório"
+    ></app-validation-message>
     <igx-input-group>
-      <label igxLabel for="newEmail">Nome de usuário</label>
+      <label igxLabel for="newUsername">Nome de usuário</label>
       <input
         igxInput
-        id="newEmail"
-        name="newEmail"
-        formControlName="newEmail"
+        id="newUsername"
+        name="newUsername"
+        formControlName="newUsername"
         type="text"
       />
     </igx-input-group>
+    <app-validation-message
+      [control]="registrationForm.controls.newUsername"
+      validation="required"
+      message="O Nome de usuário é obrigatório"
+    ></app-validation-message>
     <igx-input-group>
       <input
         igxInput
@@ -92,6 +117,11 @@
       />
       <label igxLabel for="newPassword">Senha</label>
     </igx-input-group>
+    <app-validation-message
+      [control]="registrationForm.controls.newPassword"
+      validation="required"
+      message="A Senha é obrigatória"
+    ></app-validation-message>
     <button
       igxButton="raised"
       type="submit"
