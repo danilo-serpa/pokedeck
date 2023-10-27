@@ -8,40 +8,12 @@
 @include typography();
 
 
-$custom-palette: palette($primary: #166ce500,
+$custom-palette: palette($primary: #5028d9,
     $secondary: #e0d94c,
-    $surface: #494848,
+    $surface: #dddddd,
     $gray: #fff);
 
 @include light-theme($custom-palette);
-
-body {
-  background: hsla(var(--ig-surface-500));
-  color: var(--ig-surface-500-contrast);
-}
-
-html,
-body {
-  height: 100%;
-}
-
-.ig-typography {
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  .ig-typography__body-1 {
-    margin: 0;
-  }
-}
-
-.outer-wrapper>*:not(router-outlet) {
-  width: 100%;
-}
 
 
 igc-trial-watermark {

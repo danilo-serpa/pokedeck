@@ -11,6 +11,7 @@ import { CardService } from 'src/app/shared/services';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { v4 as uuidv4 } from 'uuid';
 import { DeckService } from './../../../../shared/services/deck/deck.service';
+import { ToastService } from './../../../../shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-deck-form',
@@ -34,7 +35,8 @@ export class DeckFormComponent implements OnInit {
     private deckService: DeckService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class DeckFormComponent implements OnInit {
         Validators.required,
         Validators.minLength(24),
         Validators.maxLength(60),
-        DeckValidators.limitCardsSameName
+        DeckValidators.limitCardsSameName,
       ]),
     });
   }
@@ -130,9 +132,31 @@ export class DeckFormComponent implements OnInit {
       };
 
       if (this.deck?.id) {
-        this.deckService.update(deckForSave);
+        const result = this.deckService.update(deckForSave);
+        if (result) {
+          this.toastService.showSuccessToast(
+            'Alteração',
+            'Baralho alterado com sucesso'
+          );
+        } else {
+          this.toastService.showErrorToast(
+            'Alteração',
+            'Erro alterado o baralho'
+          );
+        }
       } else {
-        this.deckService.add(deckForSave);
+        const result = this.deckService.add(deckForSave);
+        if (result) {
+          this.toastService.showSuccessToast(
+            'Criação',
+            'Baralho criado com sucesso'
+          );
+        } else {
+          this.toastService.showErrorToast(
+            'Criação',
+            'Erro criar o baralho'
+          );
+        }
       }
 
       this.router.navigateByUrl('deck/list');

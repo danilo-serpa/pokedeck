@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { IgxButtonModule, IgxIconModule, IgxInputGroupModule, IgxPaginatorModule } from 'igniteui-angular';
+import { IgxButtonModule, IgxIconModule, IgxInputGroupModule, IgxPaginatorModule, IgxRippleModule } from 'igniteui-angular';
 import { LoaderModule } from 'src/app/shared/components/loader/loader.module';
 import { ValidationMessageModule } from './../../../../shared/components/validation-message/validation-message.module';
 import { DeckFormComponent } from './deck-form.component';
@@ -21,7 +21,8 @@ const routes: Routes = [{ path: '', component: DeckFormComponent }];
     IgxPaginatorModule,
     LoaderModule,
     ValidationMessageModule,
-    IgxButtonModule
+    IgxButtonModule,
+    IgxRippleModule,
   ],
 })
 export class DeckFormModule {}
