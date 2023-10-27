@@ -9,6 +9,7 @@ import { IgxButtonModule, IgxCarouselModule, IgxIconModule, IgxInputGroupModule,
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutDefaultModule } from './shared/components/layouts/layout-default/layout-default.module';
+import { LayoutLoginModule } from './shared/components/layouts/layout-login/layout-login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { LayoutDefaultModule } from './shared/components/layouts/layout-default/
     IgxRippleModule,
     ReactiveFormsModule,
     LayoutDefaultModule,
+    LayoutLoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
