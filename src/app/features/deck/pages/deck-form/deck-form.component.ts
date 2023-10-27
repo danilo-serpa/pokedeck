@@ -141,7 +141,7 @@ export class DeckFormComponent implements OnInit {
         } else {
           this.toastService.showErrorToast(
             'Alteração',
-            'Erro alterado o baralho'
+            'Erro ao alterar o baralho'
           );
         }
       } else {

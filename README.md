@@ -1,27 +1,96 @@
-# Pokedeck
+# Desafio Frontend Agência Estado
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
+Projeto desenvolvido como parte do processo seletivo para a vaga de Desenvolvedor Front-end Angular da Agência Estado por [Danilo Serpa Martins](https://www.linkedin.com/in/danilo-serpa-639a2173/)
 
-## Development server
+### Apresentação
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Desenvolver uma aplicação onde é possível criar baralhos com cartas de pokémons utilizando a API (https://docs.pokemontcg.io)
 
-## Code scaffolding
+### Instalação
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Pré-requisitos
 
-## Build
+Certifique-se de ter os seguintes componentes instalados em sua máquina:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Node.js e NPM (Node Package Manager)
+Angular CLI instalado globalmente (npm install -g @angular/cli).
 
-## Running unit tests
+#### Passos de Instalação
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1 - Clone o repositório do projeto para sua máquina:
 
-## Running end-to-end tests
+`git clone https://github.com/danilo-serpa/pokedeck.git`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2 - Navegue até o diretório do projeto:
 
-## Further help
+`cd pokedeck`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3 - Instale as dependências do projeto:
+
+`npm install`
+
+
+### Uso
+
+#### Executando a Aplicação
+
+Para executar a aplicação, utilize o comando:
+
+`ng serve`
+
+#### Como acessar a página principal?
+
+Deve-se criar um usuário e fazer login para ter acesso ao sistema.
+
+Qualquer outro login não terá permissão para acesso.
+
+
+### Funcionalidades
+
+#### Tela de Login
+
+Foi desenvolvido a primeira tela que é uma aplicação de autenticação, essa autenticação é realizada consultando o  localStorage do usuário apenas para simular uma autenticação e usando os serviços do guard.
+
+#### Criar/Editar baralho
+Ao clicar no botão "Criar baralho", irá redirecionar para a tela de formulário onde é possível cadastrar um nome para o baralho, e selecionar as cartas para este baralho. Em seguida clicando no botão salvar, aparecerá uma notificação dizendo que foi executado com sucesso, ou com erro caso isto aconteça.
+
+#### Excluir baralho
+No grid onde lista os baralhos é possível clicar no ícone de exclusão (Lixeira).
+
+#### Ver detalhes do baralho
+No grid onde lista os baralhos é possível clicar no ícone de detalhes (Lupa), mostrará as cartas do baralho selecionado, assim como os totalizadores de pokémons, treinadores e cores selecionados.
+
+
+### Componentes auxiliares
+
+#### Guard
+Foi criado um guarda de rota simples para garantir que fosse impossível acessar as páginas sem estar devidamente logado.
+
+#### Toast
+Foi criado um  toast para exibir as notificações ao fazer operações de CRUD.
+
+#### Loader
+Foi criado um loader para ser exibido ao fazer uma requisição a API.
+
+#### Validation message
+Foi criado um componente para formatação e estilizar as mensagens de validação dos forms.
+
+### Services desenvolvidos
+
+#### User
+Serviço responsável pela criação e login do usuário.
+
+#### Card e Deck
+Serviços responsaveis por recuperar as cartas da API e salvar os baralhos cadastrados pelo usuário.
+
+#### Storage
+Serviço utilizado para salvar os dados no localStorage.
+
+#### Toast
+Serviço responsável por controlar as notificações exibidas para o usuário.
+
+### Tecnologias
+
+- Angular 16
+- Tailwind Css
+- Infragistics
