@@ -152,10 +152,7 @@ export class DeckFormComponent implements OnInit {
             'Baralho criado com sucesso'
           );
         } else {
-          this.toastService.showErrorToast(
-            'Criação',
-            'Erro criar o baralho'
-          );
+          this.toastService.showErrorToast('Criação', 'Erro criar o baralho');
         }
       }
 
@@ -169,5 +166,10 @@ export class DeckFormComponent implements OnInit {
       []
     );
     return [...new Set(typesList)];
+  }
+
+  generatePDF() {
+    const element = document.getElementById('cards');
+    if (element) this.deckService.generatePDF(element);
   }
 }

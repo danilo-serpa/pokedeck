@@ -15,7 +15,7 @@ const routes: Routes = [{ path: '', component: DeckListComponent }];
     IgxIconModule,
     IgxInputGroupModule,
     IgxButtonModule,
-    IgxRippleModule
+    IgxRippleModule,
   ],
 })
 export class DeckListModule {}

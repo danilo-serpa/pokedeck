@@ -21,6 +21,18 @@
       message="O nome do baralho é obrigatório"
     ></app-validation-message>
 
+    <button
+        type="button"
+        igxButton="raised"
+        igxRipple="white"
+        igxButtonColor="white"
+        igxButtonBackground="#5028d9"
+        [igxRippleCentered]="true"
+        class="ml-2"
+        (click)="generatePDF()"
+      >
+        Gerar PDF
+    </button>
     <form>
       <div class="flex justify-between items-center mt-4">
         <p>Selecione suas cartas</p>
@@ -45,7 +57,7 @@
           deckForm.get('cards')?.errors && deckForm.get('cards')?.touched
       }"
     >
-      <div *ngIf="cards$ | async as cards; else templateLoading">
+      <div id="cards" *ngIf="cards$ | async as cards; else templateLoading">
         <ul>
           <li *ngFor="let card of cards.data">
             <input

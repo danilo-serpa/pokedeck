@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { html2pdf } from 'html2pdf.js';
 import { Deck } from '../../models/deck.model';
 import { User } from '../../models/user.model';
 import { StorageService } from '../storage/storage.service';
@@ -45,5 +46,18 @@ export class DeckService {
       decks = this.storageService.removeItem(this.key, deckRemove);
     }
     return decks;
+  }
+
+  generatePDF(element: HTMLElement) {
+    html2pdf()
+      .from(element)
+      .toPdf()
+      .get('pdf')
+      .then((result: any) => {
+        result.save();
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
 }
